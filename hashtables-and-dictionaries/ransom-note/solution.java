@@ -4,24 +4,24 @@ public class Solution {
 
     // Complete the checkMagazine function below.
     static void checkMagazine(String[] magazine, String[] note) {
-        Hashtable<String, Integer> w = new Hashtable<String, Integer>(); 
-
-        for (int i = 0; i < magazine.length; ++i) {
-            int count = w.containsKey(magazine[i]) ? w.get(magazine[i]) + 1 : 1;
-            w.put(magazine[i], count);
-        }
+        Hashtable<String, Integer> m = new Hashtable<String, Integer>(); 
+        Hashtable<String, Integer> n = new Hashtable<String, Integer>(); 
 
         for (int i = 0; i < note.length; ++i) {
-            if (!w.containsKey(note[i])) {
+            int count = n.containsKey(note[i]) ? n.get(note[i]) + 1 : 1;
+            n.put(note[i], count);
+        }
+
+        for (int i = 0; i < magazine.length; ++i) {
+            int count = m.containsKey(magazine[i]) ? m.get(magazine[i]) + 1 : 1;
+            m.put(magazine[i], count);
+        }
+
+        for (String key : n.keySet()) {
+            if (!(m.containsKey(key) && n.get(key) <= m.get(key))) {
                 System.out.println("No");
                 return;
             }
-            int count = w.get(note[i]) - 1;
-            if (count < 0) {
-                System.out.println("No");
-                return;
-            }
-            w.put(magazine[i], count);
         }
 
         System.out.println("Yes");
